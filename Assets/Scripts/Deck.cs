@@ -5,14 +5,17 @@ using System.Collections.Generic;
 public class Deck : MonoBehaviour {
     //The deck class will hold the list of cards the user has in their deck.
     //Variables
-    
+
+    public GameObject BlankCard;
+
+
     //List of the cards in deck - index 0 is the bottom while cards.Count is the top card
     List<GameObject> cards = new List<GameObject>();
 
     //Empty constructor
     public Deck()
     {
-
+        
     }
 
     /// <summary>
@@ -102,7 +105,19 @@ public class Deck : MonoBehaviour {
     #region Required overides for MonoBehavior - may be removed later
     // Use this for initialization
     void Start () {
-	    
+        for(int i = 0; i < 30; i++)
+        {
+            cards.Add(new Card());
+        }
+
+        Vector3 deckLocation = new Vector3(0, 0, 0);
+        Vector3 offset = new Vector3(0, .1f, 0);
+        foreach (Card c in cards)
+        {
+            GameObject clone = (GameObject)Instantiate(BlankCard, deckLocation, new Quaternion(-1,0,0,1));
+            clone.GetComponent<Card>().title = c.title;
+            deckLocation += offset;
+        }
 	}
 	
 	// Update is called once per frame
