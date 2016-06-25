@@ -1,7 +1,16 @@
-﻿using UnityEngine;
+﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Authors: Gus
+/// Authors: AJ, Gus
+/// Editors:
+/// Purpose: This class is designed to hold a list of cards as well as provide several functions to manipulate said cards.
+/// Tutorials Used: http://gamedevelopment.tutsplus.com/tutorials/how-to-save-and-load-your-players-progress-in-unity--cms-20934
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+[System.Serializable] // This means we can save all the variables in this script.
 public class Deck : MonoBehaviour {
     //The deck class will hold the list of cards the user has in their deck.
     //Variables
@@ -11,6 +20,8 @@ public class Deck : MonoBehaviour {
 
     //List of the cards in deck - index 0 is the bottom while cards.Count is the top card
     List<GameObject> cards = new List<GameObject>();
+
+    public static Deck current; // We should be able to set other deck instances to "current" to avoid the getcomponent function.
 
     //Empty constructor
     public Deck()
@@ -75,7 +86,7 @@ public class Deck : MonoBehaviour {
     }
 
     /// <summary>
-    /// Gus trying to add cards to the deck
+    /// Add cards to the deck
     /// </summary>
     public void AddCard(GameObject Card, int position) /// position = -1 for on the bottom, 0 for on top, -2 is at random, any other number is that many from the top.
     {
@@ -107,15 +118,16 @@ public class Deck : MonoBehaviour {
     void Start () {
         for(int i = 0; i < 30; i++)
         {
-            cards.Add(new Card());
+            cards.Add(new GameObject());
         }
 
         Vector3 deckLocation = new Vector3(0, 0, 0);
         Vector3 offset = new Vector3(0, .1f, 0);
-        foreach (Card c in cards)
+        foreach (GameObject c in cards)
         {
             GameObject clone = (GameObject)Instantiate(BlankCard, deckLocation, new Quaternion(-1,0,0,1));
-            clone.GetComponent<Card>().title = c.title;
+           // clone.GetComponent<Card>().title = c.title; // This is giving errors and I don't know what we were trying to do previously with this line. 
+           // I changed all instances of Card with GameObject except for this one here because even doing so didn't resolve the issue so I need more guidance.
             deckLocation += offset;
         }
 	}
