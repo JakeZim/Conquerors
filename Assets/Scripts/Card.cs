@@ -17,7 +17,9 @@ public class Card : MonoBehaviour {
 
     public Card()
     {
-        title = Random.Range(0, 10000).ToString();
+		title = "Default Title";
+		// Previously was this: Random.Range(0, 10000).ToString(); 
+		// However, that caused errors
     }
 
     // Use this for initialization
