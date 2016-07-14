@@ -9,6 +9,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 [System.Serializable] // This means we can save all the variables in this script.
 public class Deck : MonoBehaviour {
@@ -16,6 +17,8 @@ public class Deck : MonoBehaviour {
     //Variables
 
     public GameObject BlankCard;
+    public DropZone PlayerHand;
+    public Transform CardPrefab;
 
 
     //List of the cards in deck - index 0 is the bottom while cards.Count is the top card
@@ -43,6 +46,18 @@ public class Deck : MonoBehaviour {
             cards[k] = cards[n];
             cards[n] = c;
         }
+    }
+
+    /// <summary>
+    /// Draw the single topmost card to player's hand
+    /// </summary>
+    public void DrawToHand()
+    {
+        GameObject drawn = Instantiate(BlankCard);
+        drawn.transform.FindChild("Card Title").GetComponent<Text>().text = "NEW CARD!" + cards.Count;
+        drawn.transform.FindChild("Card Description").GetComponent<Text>().text = "NEW DESCRIPTION! PEW PEW!";
+        drawn.GetComponent<Card>().transform.SetParent(PlayerHand.transform,false);
+        cards.RemoveAt(cards.Count-1);
     }
 
     /// <summary>
@@ -123,13 +138,13 @@ public class Deck : MonoBehaviour {
 
         Vector3 deckLocation = new Vector3(0, 0, 0);
         Vector3 offset = new Vector3(0, .1f, 0);
-        foreach (GameObject c in cards)
+        /*foreach (GameObject c in cards)
         {
             GameObject clone = (GameObject)Instantiate(BlankCard, deckLocation, new Quaternion(-1,0,0,1));
            // clone.GetComponent<Card>().title = c.title; // This is giving errors and I don't know what we were trying to do previously with this line. 
            // I changed all instances of Card with GameObject except for this one here because even doing so didn't resolve the issue so I need more guidance.
             deckLocation += offset;
-        }
+        }*/
 	}
 	
 	// Update is called once per frame
