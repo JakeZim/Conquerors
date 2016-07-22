@@ -17,7 +17,6 @@ public class Deck : MonoBehaviour {
 
     public GameObject BlankCard;
 
-
     //List of the cards in deck - index 0 is the bottom while cards.Count is the top card
     List<GameObject> cards = new List<GameObject>();
 
